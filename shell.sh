@@ -7,6 +7,8 @@
 # guindy = MAPNAME
 clear
 echo "Good morning, world."
+
+# /c/Users/user/src/sumo-0.30.0/bin/sumo.exe -c erlangen.sumo.cfg
 cd $HOME
 cd Downloads/
 netconvert --osm-files MAPNAME.osm -o MAPNAME.net.xml
