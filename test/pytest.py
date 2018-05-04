@@ -1,6 +1,13 @@
-print("This line will be printed.")
-x = 1
-if x == 1:
-    # indented four spaces
-    print("x is 1.")
-print("Goodbye, World!")
+# bengaluru -> guindy 
+
+
+f = open('MAPNAME.sumo.cfg','r')
+message = f.read()
+
+									# __________ #
+message = message.replace('bengaluru','FILENAME')
+									# *********** #
+
+print(message)
+# f.write(message)
+f.close()

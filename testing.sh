@@ -5,3 +5,5 @@
 #   ./yourscript.sh
 cd test/
 python pytest.py
+
+python print  <<END

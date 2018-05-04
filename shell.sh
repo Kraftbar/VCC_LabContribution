@@ -2,7 +2,9 @@
 # 1. shell command
 # 2. python moding the text
 
-# guindy MAPNAME
+
+
+# guindy = MAPNAME
 clear
 echo "Good morning, world."
 cd $HOME
