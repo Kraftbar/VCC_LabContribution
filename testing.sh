@@ -1,12 +1,14 @@
 
-# How to run
+# 							How to run
+# -----------------------------------------------------------------------
+# |  C:\Users\USERNAME\src\omnetpp-5.1.1\mingwenv		# open terminal	|
+# -----------------------------------------------------------------------
 # -----------------------------------------------------------------------
 # |  chmod +x testing.sh		# Gives execute permission to script	|
-# |  ./yourscript.sh			# runs it								|
+# |  ./yourscript.sh			# runs script							|
 # -----------------------------------------------------------------------
-# -----------------------------------------------------------------------
-# |  make sure pyton script		# Gives execute permission to script	|
-# -----------------------------------------------------------------------
+
+
 
 cd ~/../..   # if opened in opnetp-5.1.1
 cd Downloads/
@@ -22,21 +24,23 @@ cd ~/../../Downloads
 ~/../../src/sumo-0.30.0/bin/polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
 # python script
 python ~/../../src/sumo-0.30.0/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e 50 -l
-# self made py script
 
+# Config file
 cd ~/../../Downloads 
-echo '<configuration>
+echo '
+<configuration>
 	<input>
-			<net-file value=testmap .net.xm1\“/>
-			<route-files value=testmap.rou.xm1\"/>
-			<additiona1-fi1es value=\"testmap.poly.xm1“/>"
+        <net-file value="testmap.net.xml"/>
+        <route-files value="testmap.rou.xml"/>
+        <additional-files value="testmap.poly.xml"/>
 	</input>
-<time>
-<begin value=\"0\"/>
-<end value=\"100\"/>
-<step-1ength value=\"0.1\"/>
-</time>
- </configuration>' > testmap.sumo.cfg
+	<time>
+		<begin value="0"/>
+		<end value="100"/>
+		<step-length value="0.1"/>
+	</time>
+</configuration>
+'> testmap.sumo.cfg
 
 
 ## NOT DONE YET
