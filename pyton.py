@@ -1,9 +1,14 @@
+
 try:
     # for Python2
     from Tkinter import *
 except ImportError:
     # for Python3
     from tkinter import *
+
+
+cmd = " echo lol echo lol "
+
 
 
 fields = 'Last Name', 'First Name', 'Job', 'Country'
@@ -36,3 +41,5 @@ if __name__ == '__main__':
    b2 = Button(root, text='Quit', command=root.quit)
    b2.pack(side=LEFT, padx=5, pady=5)
    root.mainloop()
+
+
