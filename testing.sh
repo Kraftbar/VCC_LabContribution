@@ -7,6 +7,10 @@
 # |  chmod +x testing.sh		# Gives execute permission to script	|
 # |  ./yourscript.sh			# runs script							|
 # -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+# |  Ones SUMO opens remember to set ~120ms								|
+# -----------------------------------------------------------------------
+python pytestGui.py 
 
 
 
@@ -43,5 +47,5 @@ echo '
 '> testmap.sumo.cfg
 
 
-## NOT DONE YET
+## Startes the sim
 ~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg
