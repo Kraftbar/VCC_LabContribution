@@ -1,4 +1,5 @@
 
+
 try:
     # for Python2
     from Tkinter import *
@@ -7,13 +8,21 @@ except ImportError:
     from tkinter import *
 
 
-fields = 'Last Name', 'First Name', 'Job', 'Country'
+
+
+
+file = open('vars.txt', 'w')
+a=chr(34)
+
+fields = 'Numberofvehicles', 'NumberOfServiceVehicles', 'test1', 'test2'
 
 def fetch(entries):
    for entry in entries:
       field = entry[0]
-      text  = entry[1].get()
-
+      text  = entry[1].get() 
+      file.write(field+'='+a+text+a )
+      file.write('\n')
+      
 
 def makeform(root, fields):
    entries = []
@@ -31,10 +40,14 @@ if __name__ == '__main__':
    root = Tk()
    ents = makeform(root, fields)
    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
-   b1 = Button(root, text='Show',
+   b1 = Button(root, text='Apply',
           command=(lambda e=ents: fetch(e)))
    b1.pack(side=LEFT, padx=5, pady=5)
    b2 = Button(root, text='Quit', command=root.quit)
    b2.pack(side=LEFT, padx=5, pady=5)
    root.mainloop()
+
+
+
+file.close()
 

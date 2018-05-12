@@ -11,6 +11,7 @@
 # |  Ones SUMO opens remember to set ~120ms								|
 # -----------------------------------------------------------------------
 echo "
+
 try:
     # for Python2
     from Tkinter import *
@@ -19,13 +20,21 @@ except ImportError:
     from tkinter import *
 
 
-fields = 'Last Name', 'First Name', 'Job', 'Country'
+
+
+
+file = open('vars.txt', 'w')
+a=chr(34)
+
+fields = 'Numberofvehicles', 'NumberOfServiceVehicles', 'test1', 'test2'
 
 def fetch(entries):
    for entry in entries:
       field = entry[0]
-      text  = entry[1].get()
-
+      text  = entry[1].get() 
+      file.write(field+'='+a+text+a )
+      file.write('\n')
+      
 
 def makeform(root, fields):
    entries = []
@@ -43,7 +52,7 @@ if __name__ == '__main__':
    root = Tk()
    ents = makeform(root, fields)
    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
-   b1 = Button(root, text='Show',
+   b1 = Button(root, text='Apply',
           command=(lambda e=ents: fetch(e)))
    b1.pack(side=LEFT, padx=5, pady=5)
    b2 = Button(root, text='Quit', command=root.quit)
@@ -51,11 +60,8 @@ if __name__ == '__main__':
    root.mainloop()
 
 
-   ## SKRIV TIL FIL
-   # txt contaions just the value not the name
-   # file = open('vars.txt', 'w')
-   # file.write(your_multiline_string)
-   # file.close()
+
+file.close()
 "> lol.py
 python lol.py
 
@@ -63,8 +69,9 @@ python lol.py
 
 eval $(cat vars.txt)
 # txt is just the value not the name
-# echo $ONE
+ echo $Numberofvehicles
 # echo $TIME
+exit 1
 
 
 
@@ -145,7 +152,7 @@ case "$OSTYPE" in
 		sumo-gui -c testmap.sumo.cfg
 	;;
   msys*)    echo "WINDOWS"
-		~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg
+		# ~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg
    ;;
   *)        echo "unknown: $OSTYPE" ;;
 esac

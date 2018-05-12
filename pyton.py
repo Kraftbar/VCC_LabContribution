@@ -11,13 +11,18 @@ cmd = " echo lol echo lol "
 
 
 
-fields = 'Last Name', 'First Name', 'Job', 'Country'
+file = open('vars.txt', 'w')
+a=chr(34)
+
+fields = 'Number of vehicles', 'Number of service vehicles', 'test1', 'test2'
 
 def fetch(entries):
    for entry in entries:
       field = entry[0]
       text  = entry[1].get()
       print('%s: "%s"' % (field, text)) 
+      file.write(field+'='+a+text+a '\n' )
+
 
 def makeform(root, fields):
    entries = []
@@ -35,7 +40,7 @@ if __name__ == '__main__':
    root = Tk()
    ents = makeform(root, fields)
    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
-   b1 = Button(root, text='Show',
+   b1 = Button(root, text='Apply',
           command=(lambda e=ents: fetch(e)))
    b1.pack(side=LEFT, padx=5, pady=5)
    b2 = Button(root, text='Quit', command=root.quit)
@@ -43,3 +48,5 @@ if __name__ == '__main__':
    root.mainloop()
 
 
+
+file.close()
