@@ -1,2 +1,3 @@
-1. shell command
-2. python moding the text
+
+ONE=`grep --only-matching --perl-regex "(?<=ONE\=).*" translog.txt`
+TIME=`grep --only-matching --perl-regex "(?<=TIME\=).*" translog.txt`

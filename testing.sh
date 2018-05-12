@@ -49,9 +49,22 @@ if __name__ == '__main__':
    b2 = Button(root, text='Quit', command=root.quit)
    b2.pack(side=LEFT, padx=5, pady=5)
    root.mainloop()
+
+
+   ## SKRIV TIL FIL
+   # txt contaions just the value not the name
+   # file = open('vars.txt', 'w')
+   # file.write(your_multiline_string)
+   # file.close()
 "> lol.py
 python lol.py
 
+
+
+eval $(cat vars.txt)
+# txt is just the value not the name
+# echo $ONE
+# echo $TIME
 
 cd ~/../..   # if opened in opnetp-5.1.1
 cd Downloads/
