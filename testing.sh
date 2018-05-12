@@ -66,23 +66,61 @@ eval $(cat vars.txt)
 # echo $ONE
 # echo $TIME
 
-cd ~/../..   # if opened in opnetp-5.1.1
-cd Downloads/
 
-# 1. first command
-~/../../src/sumo-0.30.0/bin/netconvert --osm-files map.osm -o testmap.net.xml
-cd ..
-cd src/sumo-0.30.0_test/data/typemap/
-# 2. copy
-cp osmPolyconvert.typ.xml  ~/../../Downloads
-cd ~/../../Downloads 
-# 2. secound command
-~/../../src/sumo-0.30.0/bin/polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
-# python script
-python ~/../../src/sumo-0.30.0/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e 50 -l
 
-# Config file
-cd ~/../../Downloads 
+case "$OSTYPE" in
+  solaris*) echo "SOLARIS" ;;
+  darwin*)  echo "OSX" ;; 
+  linux*)   echo "LINUX" 
+
+
+		# add sumo folder to environment variable here
+		# declare SUMO_HOME here if not defined 
+
+		# 1. first command
+		netconvert --osm-files map.osm -o testmap.net.xml
+
+		# 2. copy the osmPoly to current folder I need the file
+		cp $SUMO_HOME/data/typemap/osmPolyconvert.typ.xml  .
+
+		# 2. secound command
+		polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
+		# python script
+		python $SUMO_HOME/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e 50 -l
+
+	;;
+  bsd*)     echo "BSD" ;;
+  msys*)    echo "WINDOWS"
+
+		cd ~/../..   # if opened in opnetp-5.1.1
+		cd Downloads/
+
+		# 1. first command
+		~/../../src/sumo-0.30.0/bin/netconvert --osm-files map.osm -o testmap.net.xml
+		cd ..
+		cd src/sumo-0.30.0_test/data/typemap/
+		# 2. copy
+		cp osmPolyconvert.typ.xml  ~/../../Downloads
+		cd ~/../../Downloads 
+		# 2. secound command
+		~/../../src/sumo-0.30.0/bin/polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
+		# python script
+		python ~/../../src/sumo-0.30.0/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e 50 -l
+
+		# Config file
+		cd ~/../../Downloads
+
+   ;;
+  *)        echo "unknown: $OSTYPE" ;;
+esac
+
+
+
+
+
+
+
+ 
 echo '
 <configuration>
 	<input>
@@ -99,5 +137,16 @@ echo '
 '> testmap.sumo.cfg
 
 
-## Startes the sim
-~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg
+
+
+		## Startes the sim
+case "$OSTYPE" in
+  linux*)   echo "LINUX" 
+		sumo-gui -c testmap.sumo.cfg
+	;;
+  msys*)    echo "WINDOWS"
+		~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg
+   ;;
+  *)        echo "unknown: $OSTYPE" ;;
+esac
+
