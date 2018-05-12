@@ -93,7 +93,7 @@ case "$OSTYPE" in
 		# 2. secound command
 		polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
 		# python script
-		python $SUMO_HOME/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e 50 -l
+		python $SUMO_HOME/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e -$Numberofvehicles -l
 
 	;;
   bsd*)     echo "BSD" ;;
@@ -152,7 +152,7 @@ case "$OSTYPE" in
 		sumo-gui -c testmap.sumo.cfg
 	;;
   msys*)    echo "WINDOWS"
-		# ~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg
+		 ~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg
    ;;
   *)        echo "unknown: $OSTYPE" ;;
 esac
