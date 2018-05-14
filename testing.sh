@@ -146,7 +146,7 @@ echo '
 
 
 
-		## Startes the sim
+		## Startes the simulation in SUMO
 case "$OSTYPE" in
   linux*)   echo "LINUX" 
 		sumo-gui -c testmap.sumo.cfg

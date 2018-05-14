@@ -1,0 +1,314 @@
+#VRML V1.0 ascii
+
+DEF World Separator {
+
+   Transform {
+      rotation 1 0 0 0.52359878
+   }
+
+   DirectionalLight {
+      on        TRUE
+      intensity 1
+      color 1 1 1
+      direction 1 0 0
+   }
+
+   DEF Car Separator {
+      
+      DEF LeftFrontWheel Separator {
+         Transform {
+            translation -2.0 0 2 
+         }
+
+         Material {
+            diffuseColor 1.0 0 0
+         }
+
+         DEF Wheel Sphere {
+            radius 1
+         }
+      }
+
+      DEF RightFrontWheel Separator {
+         Transform {
+            translation -2.0 0 -2 
+         }
+
+         Material {
+            diffuseColor 0 1.0 0
+         }
+
+         USE Wheel
+#        Sphere {
+#           radius 1
+#        }
+      }
+
+      DEF LeftRearWheel Separator {
+         Transform {
+            translation 2.0 0 2 
+         }
+
+         Material {
+            diffuseColor 0 0 1.0
+         }
+
+         USE Wheel
+#        Sphere {
+#           radius 1
+#        }
+      }
+
+      DEF RightRearWheel Separator {
+         Transform {
+            translation 2.0 0 -2 
+         }
+
+         Material {
+            diffuseColor 1.0 1.0 0
+         }
+
+         USE Wheel
+#        Sphere {
+#           radius 1
+#        }
+      }
+
+      DEF WindShield Separator {
+         Transform {
+            translation -2 1 0
+            rotation 0 0 1 -1.0471976
+         }
+         Material {
+            diffuseColor 0.2 0.2 0.2
+            specularColor 0.8 0.8 0.8
+            shininess 0.7
+            transparency 0.8
+         }
+         Cube {
+            width 0.01
+            height 2.0
+            depth 1.5
+         }
+      }
+
+      DEF LeftSign Separator {
+         Transform {
+            translation 0 0 1.01
+            rotation 0 1 0 -1.5707963
+         }
+         DEF Sign Separator {
+            Material {
+               diffuseColor 1.0 1.0 1.0
+               specularColor 0.8 0.8 0.8
+               shininess 0.7
+            }
+            Texture2 {
+               filename "number.gif"
+            }
+            Cube {
+               width 0.01
+               height 1.0
+               depth 1.0
+            }
+         }
+      }
+
+      DEF RightSign Separator {
+         Transform {
+            translation 0 0 -1.01
+            rotation 0 1 0 -1.5707963
+         }
+         USE Sign
+#        Material {
+#           diffuseColor 1.0 1.0 1.0
+#           specularColor 0.8 0.8 0.8
+#           shininess 0.7
+#        }
+#        Texture2 {
+#           filename "number.gif"
+#        }
+#        Cube {
+#           width 0.01
+#           height 1.0
+#           depth 1.0
+#        }
+      }
+
+      DEF DrivingWheel Separator {
+         Transform {
+            translation -1.2 0.5 0.2
+            rotation 0 0 1 -1.5707963
+         }
+         Material {
+            diffuseColor 0.2 0.2 0.2
+         }
+         Cylinder {
+            parts ALL
+            radius 0.5
+            height 0.01
+         }
+      }
+
+      DEF Body Separator {
+         Material {
+            diffuseColor 1.0 1.0 1.0
+         }
+         Cube {
+            width 6
+            height 1
+            depth 2
+         }
+      }
+
+      DEF RightHeadLight Separator {
+         Transform {
+            translation -3.0 0.3 -0.5
+         }
+         DEF HeadLight Separator {
+            Separator {
+               Transform {
+                  translation -0.2 0 0
+                  rotation 0 0 1 -1.5707963
+               }
+               Material {
+                  diffuseColor 1.0 0 0
+               }
+               Cone {
+                  parts ALL
+                  bottomRadius 0.09
+                  height 0.5
+               }
+            }
+            Separator {
+               Transform {
+                  translation -0.45 0 0
+               }
+               Material {
+                  emissiveColor 1.0 1.0 0
+               }
+               PointLight {
+                  intensity 1
+                  color 1.0 1.0 0.9
+               }
+               Sphere {
+                  radius 0.1
+               }
+            }
+         }
+      }
+
+      DEF LeftHeadLight Separator {
+         Transform {
+            translation -3.0 0.3 0.5
+         }
+         USE HeadLight
+#        Separator {
+#           Transform {
+#              translation -0.2 0 0
+#              rotation 0 0 1 -1.5707963
+#           }
+#           Material {
+#              diffuseColor 1.0 0 0
+#           }
+#           Cone {
+#              parts ALL
+#              bottomRadius 0.09
+#              height 0.5
+#           }
+#        }
+#        Separator {
+#           Transform {
+#              translation -0.45 0 0
+#           }
+#           Material {
+#              emissiveColor 1.0 1.0 0
+#           }
+#           PointLight {
+#              intensity 1
+#              color 1.0 1.0 0.9
+#           }
+#           Sphere {
+#              radius 0.1
+#           }
+#        }
+      }
+   }
+
+   Transform {
+      translation 0 -2 5
+   }
+
+   WWWAnchor {
+      name "http://www.lamborghini.com/"
+
+      Transform {
+         translation 4.5 0 0
+         rotation 1 0 0 -1.0471976
+         scaleFactor 0.125 0.125 0.125
+         center 0 0 0
+      }
+
+      AsciiText {
+         string "Lamborghini"
+         spacing 1
+         justification CENTER
+         width   0
+      }
+   }
+
+   WWWAnchor {
+      name "http://www.bmwusa.com/"
+
+      Transform {
+         translation -4.5 0 0
+         rotation 1 0 0 -1.0471976
+         scaleFactor 0.125 0.125 0.125
+         center 0 0 0
+      }
+
+      AsciiText {
+         string "BMW"
+         spacing 1
+         justification CENTER
+         width   0
+      }
+   }
+
+   WWWAnchor {
+      name "http://www.ford.com/"
+
+      Transform {
+         translation 4.5 -1 2
+         rotation 1 0 0 -1.0471976
+         scaleFactor 0.125 0.125 0.125
+         center 0 0 0
+      }
+
+      AsciiText {
+         string "Ford"
+         spacing 1
+         justification CENTER
+         width   0
+      }
+   }
+
+   WWWAnchor {
+      name "http://www.gm.com/"
+
+      Transform {
+         translation -4.5 -1 2
+         rotation 1 0 0 -1.0471976
+         scaleFactor 0.125 0.125 0.125
+         center 0 0 0
+      }
+
+      AsciiText {
+         string "General Moters"
+         spacing 1
+         justification CENTER
+         width   0
+      }
+   }
+}
+
