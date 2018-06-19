@@ -1,4 +1,3 @@
-Numberofvehicles="32"
-NumberOfServiceVehicles="23"
-test1="23"
-test2="23"
+Task vec.="20"
+Serice vec.=""
+Simulation Time=""

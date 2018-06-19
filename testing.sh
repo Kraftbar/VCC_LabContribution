@@ -26,7 +26,7 @@ except ImportError:
 file = open('vars.txt', 'w')
 a=chr(34)
 
-fields = 'Numberofvehicles', 'NumberOfServiceVehicles', 'test1', 'test2'
+fields = 'Task vec.', 'Serice vec.', 'Simulation Time'
 
 def fetch(entries):
    for entry in entries:
@@ -71,7 +71,6 @@ eval $(cat vars.txt)
 # txt is just the value not the name
  echo $Numberofvehicles
 # echo $TIME
-exit 1
 
 
 
@@ -85,6 +84,7 @@ case "$OSTYPE" in
 		# declare SUMO_HOME here if not defined 
 
 		# 1. first command
+    netconvert --osm-files map.osm --plain-output-prefix plain --proj.plain-geo
 		netconvert --osm-files map.osm -o testmap.net.xml
 
 		# 2. copy the osmPoly to current folder I need the file
@@ -93,7 +93,7 @@ case "$OSTYPE" in
 		# 2. secound command
 		polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
 		# python script
-		python $SUMO_HOME/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e -$Numberofvehicles -l
+		python $SUMO_HOME/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e -$TV -l
 
 	;;
   bsd*)     echo "BSD" ;;
@@ -112,7 +112,7 @@ case "$OSTYPE" in
 		# 2. secound command
 		~/../../src/sumo-0.30.0/bin/polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
 		# python script
-		python ~/../../src/sumo-0.30.0/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e 50 -l
+		python ~/../../src/sumo-0.30.0/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e $TV -l
 
 		# Config file
 		cd ~/../../Downloads
@@ -140,6 +140,9 @@ echo '
 		<end value="100"/>
 		<step-length value="0.1"/>
 	</time>
+  <output> 
+     <fcd-output value="MySUMONet.net.xml" />
+  </output>
 </configuration>
 '> testmap.sumo.cfg
 
@@ -152,7 +155,7 @@ case "$OSTYPE" in
 		sumo-gui -c testmap.sumo.cfg
 	;;
   msys*)    echo "WINDOWS"
-		 ~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg
+		 ~/../../src/sumo-0.30.0/bin/sumo-gui  testmap.sumo.cfg  
    ;;
   *)        echo "unknown: $OSTYPE" ;;
 esac
