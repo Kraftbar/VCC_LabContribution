@@ -55,6 +55,7 @@ ud.G2_Axes = axes('Position', [0.37 0.1 0.28 0.25], ...
                   'Color',    'k', ...
                   'XColor',   'w', ...
                   'YColor',   'w', ...
+                  'YLim',     [0 max(M(:,3))], ...
                   'XLim',     [0 stoptime]);
 set(ud.G2_Axes, 'Title', title('Real-time delay avg.', 'Color', 'w'));
 ud.XData = [];
@@ -102,17 +103,15 @@ end
 ud.vr_world = vr_world;
 
 % create two canvases in the figure
-vr.canvas(vr_world, 'Parent', FigHandle, ...
+C1= vr.canvas(vr_world, 'Parent', FigHandle, ...
           'Units', 'normalized', ...
-          'Position', [0.03 0.45 0.45 0.53]);
-c2 = vr.canvas(vr_world, 'Parent', FigHandle, ...
-               'Units', 'normalized', ...
-               'Position', [0.52 0.45 0.45 0.53]);
-set(c2, 'Viewpoint', 'VPfollow');
-C1 = vr.canvas(vr_world, 'Parent', FigHandle, ...
-               'Units', 'normalized', ...
-               'Position', [0.03  0.45 0.45 0.53]);
-set(C1, 'Viewpoint', 'View1');
+          'Position', [0.03 0.45 0.9 0.53]);
+      % two windows 
+set(C1, 'Viewpoint', 'VPfollow');
+% c2 = vr.canvas(vr_world, 'Parent', FigHandle, ...
+%                'Units', 'normalized', ...
+%                'Position', [0.52 0.45 0.45 0.53]);
+% set(c2, 'Viewpoint', 'VPfollow');
 
 
 
@@ -122,51 +121,6 @@ set(FigHandle, 'UserData', ud, 'HandleVisibility', 'callback');
 % end Create_3GFigure
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-%%%% Itterate veacle data 
-done=0;
-RouteCar1=[];
-laneIDs=[string(a.fcd_dash_export.timestep{1}.vehicle.Attributes.lane)];
-tester=0;
-for j =1:length(a.fcd_dash_export.timestep) % timestep
-    for i = 1:numel(a.fcd_dash_export.timestep{j}.vehicle) % cars
-        if(length(a.fcd_dash_export.timestep{j}.vehicle)==1)
-            data=a.fcd_dash_export.timestep{j}.vehicle.Attributes;
-            
-        else
-            data=a.fcd_dash_export.timestep{j}.vehicle{i}.Attributes;
-        end
-        laneID=(data.lane);
-        
-        % Gets info first car
-        % gethers it to RouteCar1
-        if(i==1)
-            dataAng=str2num(data.angle);
-            dataX=str2num(data.x);
-            dataY=str2num(data.y);
-            if( ~(strcmp(string(data.lane),laneIDs(end)) ))
-                laneIDs=[laneIDs   string(data.lane)];
-            end
-            RouteCar1=[RouteCar1; dataX dataY dataAng];
-        end
-        
-        tester=tester+1;
-    end
-    if (tester==300)
-        break;
-    end
-end
-%%%% Itterate veacle data 
-
-
-bias=(min(RouteCar1));
-RouteCar1=[RouteCar1(:,1)-bias(1),RouteCar1(:,2)-bias(2),RouteCar1(:,3)];
-RouteCar1=[RouteCar1(:,1)/10,RouteCar1(:,2)/10,RouteCar1(:,3)];
-% a.fcd_dash_export.timestep{1, 20}.vehicle{2}.Attributes.angle
-% a.fcd_dash_export.timestep{1, 2}.vehicle.Attributes.angle
-
 
 
 
@@ -236,32 +190,35 @@ for i=1:length(x1)-1
     
     
     car.translation = [RouteCar1(i,1) (y1(ii)) RouteCar1(i,2)+3];
-    car1.translation = [sin(x1(i))*sving+16 (y1(i)) (z1(i))];
-    car2.translation = [sin(x1(iii))*sving+16 (y1(iii)) (z1(iii))-6];
+    car1.translation = [RouteCar1(ii,1)+5 (y1(i)) RouteCar1(ii,2)];
+    car2.translation = [RouteCar1(iii,1)+10 (y1(iii)) RouteCar1(iii,2)+10];
     
-    % seems to rotate a bit too much
-
     car.rotation = [0, 1, 0, deg2rad(RouteCar1(i,3))-1.4];
-    car2.rotation = [0, 1, 0, ((atan(((sin(x1(iii+1))*sving-sin(x1(iii))*8)/(z1(iii+1)-z1(iii))))))];
-    car1.rotation = [0, 1, 0, ((atan(((sin(x1(i+1))*sving-sin(x1(i))*8)/(z1(i+1)-z1(i))))))];
+    car2.rotation = [0, 1, 0, deg2rad(RouteCar1(iii,3))];
+    car1.rotation = [0, 1, 0, deg2rad(RouteCar1(ii,3))];
     
     vrdrawnow;
     pause(0.08);
     
+    
+    if(length(M(:,1))>i)
     %%%%%%%%%%%%%%%%%%%%%
-    if( any(ismember(M(ceil(i/12)+10,:),1)) )
+    if( any(ismember(M(i,:),3)))
     world.SV1.children(1,4).children.appearance.material.diffuseColor=[0.1 0.3 0.1];
-    addpoints(ud.G1_Line, [x1(i),x1(i+1)] , [1,1]);
+    addpoints(ud.G1_Line, [(i),(i+1)] , [3,3]);
     else
     world.SV1.children(1,4).children.appearance.material.diffuseColor=[0.1 0.1 0.1];
     end
-    if(any(ismember(M(ceil(i/12)+10,:),2)) )  
+    if(any(ismember(M(i,:),2)))  
     world.SV2.children(1,4).children.appearance.material.diffuseColor=[0.1 0.3 0.1];
-    addpoints(ud.G1_Line, [x1(i),x1(i+1)] , [2,2]);
+    addpoints(ud.G1_Line, [(i),(i+1)] , [2,2]);
     else
     world.SV2.children(1,4).children.appearance.material.diffuseColor=[0.1 0.1 0.1];
     end
     %%%%%%%%%%%%%%%%%%%%
+    point=sum(M(1:i,3))/i;
+    addpoints(ud.G2_Line,i, point);
+    end
 end
 
 
@@ -269,39 +226,39 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% WRITE ROAD
-vei=[]
-for i=1:length(x1)   
-    vei =[vei sin(x1(i))*sving+11 0.01 (z1(i))];
-    vei =[vei sin(x1(i))*sving+21 0.01 (z1(i))];
-
-end
-
-
-fileID = fopen('points.txt','w');
-fprintf(fileID,"[");
-fprintf(fileID,'%6.2f %6.2f %6.2f, \n ',(vei));
-fprintf(fileID,']');
-fclose(fileID);
-
-
-
-% -0.9210
-drawOrder=[]
-for i=0:length(x1)-3 % riktig
-    i=i*2;
-    drawOrder=[drawOrder 0+i 2+i 3+i 1+i -1];
-end
-
-fileID = fopen('draw.txt','w');
-fprintf(fileID,"[");
-fprintf(fileID,'%i ,',drawOrder);
-fprintf(fileID,"]");
-fclose(fileID);
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% WRITE ROAD
+% vei=[]
+% for i=1:length(x1)   
+%     vei =[vei sin(x1(i))*sving+11 0.01 (z1(i))];
+%     vei =[vei sin(x1(i))*sving+21 0.01 (z1(i))];
+% 
+% end
+% 
+% 
+% fileID = fopen('points.txt','w');
+% fprintf(fileID,"[");
+% fprintf(fileID,'%6.2f %6.2f %6.2f, \n ',(vei));
+% fprintf(fileID,']');
+% fclose(fileID);
+% 
+% 
+% 
+% % -0.9210
+% drawOrder=[]
+% for i=0:length(x1)-3 % riktig
+%     i=i*2;
+%     drawOrder=[drawOrder 0+i 2+i 3+i 1+i -1];   
+% end
+% 
+% fileID = fopen('draw.txt','w');
+% fprintf(fileID,"[");
+% fprintf(fileID,'%i ,',drawOrder);
+% fprintf(fileID,"]");
+% fclose(fileID);
+% 
+% 
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%% WRITE ROAD
 
 
 
