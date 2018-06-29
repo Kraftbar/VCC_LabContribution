@@ -26,7 +26,7 @@ except ImportError:
 file = open('vars.txt', 'w')
 a=chr(34)
 
-fields = 'Task vec.', 'Serice vec.', 'Simulation Time'
+fields = 'Task_vec.', 'Serice_vec.', 'Simulation_Time'
 
 def fetch(entries):
    for entry in entries:
@@ -93,7 +93,7 @@ case "$OSTYPE" in
 		# 2. secound command
 		polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
 		# python script
-		python $SUMO_HOME/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e -$TV -l
+		python $SUMO_HOME/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e -$Task_vec -l
 
 	;;
   bsd*)     echo "BSD" ;;
@@ -112,7 +112,7 @@ case "$OSTYPE" in
 		# 2. secound command
 		~/../../src/sumo-0.30.0/bin/polyconvert --net-file testmap.net.xml --osm-files map.osm --type-file osmPolyconvert.typ.xml -o testmap.poly.xml
 		# python script
-		python ~/../../src/sumo-0.30.0/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e $TV -l
+		python ~/../../src/sumo-0.30.0/tools/randomTrips.py -n testmap.net.xml -r testmap.rou.xml -e $Task_vec -l
 
 		# Config file
 		cd ~/../../Downloads

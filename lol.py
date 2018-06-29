@@ -14,7 +14,7 @@ except ImportError:
 file = open('vars.txt', 'w')
 a=chr(34)
 
-fields = 'Task vec.', 'Serice vec.', 'Simulation Time'
+fields = 'Task_vec.', 'Serice_vec.', 'Simulation_Time'
 
 def fetch(entries):
    for entry in entries:

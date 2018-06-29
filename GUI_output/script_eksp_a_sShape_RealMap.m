@@ -1,3 +1,5 @@
+%% 6 Init the wold and the cars
+
 world = vrworld('Eks_mountScalTran_eksp_S_shape_moreSV.wrl');
 open(world);
 fig = view(world, '-internal');
@@ -13,8 +15,7 @@ fields(car)
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%% 7 Create figure and grafs
 
 block = gcbh;
 FigHandle = figure('Units',          'pixels', ...
@@ -65,9 +66,9 @@ ud.Y2Data = [];
 ud.G3_Axes = axes('Position', [0.69 0.1 0.28 0.25], ...
                   'XGrid',    'on', ...
                   'YGrid',    'on', ...
-                  'Color',    'k', ...
-                  'XColor',   'w', ...
-                  'YColor',   'w', ...
+                  'Color',    'k',  ...
+                  'XColor',   'w',  ...
+                  'YColor',   'w',  ...
                   'XLim',     [0 stoptime]);
 set(ud.G3_Axes, 'Title', title('Overall performance', 'Color', 'w'));
 ud.XData = [];
@@ -140,16 +141,13 @@ set(FigHandle, 'UserData', ud, 'HandleVisibility', 'callback');
 
 
 
-reload(world);    
 
 
 
 
 
 
-
-
-
+%% 8 
 
 
 car.rotation = [0, 1, 0, -1.5];
@@ -172,7 +170,7 @@ y1 = 0.25 + zeros(length(t1));
 %y1 = 0.25 + zeros(size(z1));
 
 
-
+%% 8 Main loop position the cars
 
 
 for i=1:length(x1)-1   
@@ -198,7 +196,7 @@ for i=1:length(x1)-1
     car1.rotation = [0, 1, 0, deg2rad(RouteCar1(ii,3))];
     
     vrdrawnow;
-    pause(0.08);
+    pause(0.2);
     
     
     if(length(M(:,1))>i)

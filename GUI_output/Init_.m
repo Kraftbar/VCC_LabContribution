@@ -1,6 +1,12 @@
 
 
-%% read the network data and set the IDs of the cars
+%% 1 read the network data and set the IDs of the cars
+% TODO:
+% Now the logfile is produced munualy because the origianl the colomuns
+% is not lining up. This can be solved be adding a caracter infront of
+% the logfile of Omnet
+
+%   EKS fromat
 
 M = dlmread('del_chosen_100s.dat');
 something=[M(:,1);M(:,2)];
@@ -10,24 +16,24 @@ for i=1:len
     for row=1:size(M,1)
         for col=1:size(M,2)
             if(M(row,col)==something(i))
-              M(row,col)=i;
+                M(row,col)=i;
             end
         end
     end
 end
 
 
-%% Read the xml - netconvert and the outputfile
+%% 2 Read the xml - netconvert and the outputfile
 
 a=xml2struct('G6_badaling_fcd_output[674].xml')
- route=xml2struct('testmap.net.xml');
+route=xml2struct('testmap.net.xml');
 
 
 
 
 
 
-%% Find car route and ID log
+%% 3 Find car route and ID log
 done=0;
 RouteCar1=[];
 laneIDs=[string(a.fcd_dash_export.timestep{1}.vehicle.Attributes.lane)];
@@ -70,10 +76,10 @@ RouteCar1=[RouteCar1(:,1)/10,RouteCar1(:,2)/10,RouteCar1(:,3)];
 
 
 
- 
 
-%% FIND edges based on the route
-vei=[];
+
+%% 4 FIND edges based on the route
+road=[];
 d=0
 Cordinates=[zeros(length(laneIDs),6)]
 Cordinates2d=[]
@@ -119,7 +125,6 @@ for i= 1:length(laneIDs)
             end
         end
         if(found && length(fieldnames(route.net.edge{j}.Attributes))>5)
-            % kan liste opp to like
             cords=str2num(route.net.edge{j}.Attributes.shape);
             for n=1:length(cords)
                 if(~mod(n,2))
@@ -132,20 +137,19 @@ for i= 1:length(laneIDs)
 end
 
 
-%% Write the road to file 
+%% 5 Write the road to file
 
 
-vei=[]
-for i=1:length(RouteCar1(:,1))   
-    vei =[vei RouteCar1(i,1) 0.01 RouteCar1(i,2)+10];
-    vei =[vei RouteCar1(i,1) 0.01 RouteCar1(i,2)-10];
-
+road=[]
+for i=1:length(RouteCar1(:,1))
+    road =[road RouteCar1(i,1) 0.01 RouteCar1(i,2)+10];
+    road =[road RouteCar1(i,1) 0.01 RouteCar1(i,2)-10];
 end
 
 
 fileID = fopen('pointsSumo.txt','w');
 fprintf(fileID,"[");
-fprintf(fileID,'%6.2f %6.2f %6.2f, \n ',(vei));
+fprintf(fileID,'%6.2f %6.2f %6.2f, \n ',(road));
 fprintf(fileID,']');
 fclose(fileID);
 
@@ -157,7 +161,7 @@ fclose(fileID);
 drawOrder=[]
 for i=0:length(RouteCar1(:,1))-3 % riktig
     i=i*2;
-    drawOrder=[drawOrder 0+i 2+i 3+i 1+i -1];   
+    drawOrder=[drawOrder 0+i 2+i 3+i 1+i -1];
 end
 
 fileID = fopen('draw.txt','w');
